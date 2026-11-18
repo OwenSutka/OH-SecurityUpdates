@@ -1,0 +1,7 @@
+# allow.txt
+#
+# Explicit user bypasses. An allow rule WINS over warn rules, and is surfaced to
+# the agent so a bypass is never silent.
+#
+# Deliberately empty. Add a narrow ERE here when a legitimate operation trips a
+# warn rule; never add anything that matches broadly.

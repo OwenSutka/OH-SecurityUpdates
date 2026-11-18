@@ -1,0 +1,31 @@
+# deny_paths.txt
+#
+# exit 2. Hard block on reads or writes of these paths.
+#
+# The workspace-isolation rule lives here: writes must stay inside the project,
+# and the credential stores below are never legitimate agent input.
+#
+# NOTE ON BREADTH: system directories are blocked for WRITES only. Reading
+# `/etc/os-release` or `/proc/cpuinfo` is ordinary inspection, and blocking it
+# teaches users to bypass the guardrail. A rule that fires on `cat /etc/hostname`
+# is a bug, not a security control.
+
+# Workspace escapes: writes into system locations
+(>|>>|tee[[:space:]]+|cp[[:space:]][^|]*[[:space:]]|mv[[:space:]][^|]*[[:space:]])[[:space:]]*\/?(etc|usr|bin|sbin|boot|var|opt|root|sys|proc)\/
+sed[[:space:]]+-i[^|]*[[:space:]]\/?(etc|usr|bin|sbin|boot|var|opt|root)\/
+
+# Credential stores - reads and writes both blocked
+~?\/?\.ssh\/(id_|.*_rsa|.*_ed25519|.*_ecdsa|.*_dsa|known_hosts|authorized_keys)
+~?\/?\.aws\/credentials
+~?\/?\.config\/gh\/hosts\.yml
+~?\/?\.docker\/config\.json
+~?\/?\.netrc
+~?\/?\.npmrc
+~?\/?\.pypirc
+~?\/?\.git-credentials
+~?\/?\.openhands\/(secrets\.json|workspaces\.json|provider-connections)
+~?\/?\.openhands\/agent-canvas\/(secret-key|automation-kv-secret)\.txt
+
+# Exfiltrating .env in one command
+(cat|less|more|head|tail|grep|awk|sed|source|\.)[[:space:]][^|]*\.env(\.[a-z]+)?([^a-zA-Z0-9_.]|$)
+(printenv|env)[[:space:]]*\|[[:space:]]*(grep|curl|wget)

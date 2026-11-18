@@ -1,0 +1,8 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "security-baseline",
+  "version": "0.1.0",
+  "description": "Blacklist-mode guardrails, workspace isolation and secret detection for OpenHands.",
+  "license": "MIT",
+  "repository": "https://github.com/OwenSutka/OH-SecurityUpdates"
+}

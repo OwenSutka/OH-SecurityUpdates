@@ -1,0 +1,10 @@
+# log_paths.txt
+#
+# exit 0, event only. High-volume, low-signal paths worth a trail entry.
+
+~?\/?\.cache\/
+~?\/?\.local\/lib\/
+__pycache__\/
+\.venv\/|venv\/
+node_modules\/
+\.pytest_cache\/|\.ruff_cache\/|\.mypy_cache\/

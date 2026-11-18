@@ -1,0 +1,30 @@
+# deny_commands.txt
+#
+# exit 2. Hard block.
+#
+# Keep this list short and unambiguous. Every entry is a command that has no
+# legitimate use inside an agent session, and a false positive here stops real
+# work. Anything debatable belongs in warn_commands.txt.
+#
+# Matched as ERE against the extracted command string.
+
+# Filesystem destruction
+rm[[:space:]]+(-[a-zA-Z]*[rR][a-zA-Z]*[[:space:]]+)+\/([[:space:]]|$)
+rm[[:space:]]+(-[a-zA-Z]*[rR][a-zA-Z]*[[:space:]]+)+\/\*([[:space:]]|$)
+rm[[:space:]]+(-[a-zA-Z]*[rR][a-zA-Z]*[[:space:]]+)*(~|\$HOME)([[:space:]]|$)
+mkfs(\.[a-z0-9]+)?[[:space:]]
+dd[[:space:]]+[^|]*of=/dev/(sd|nvme|hd)
+(>|tee[[:space:]]+)\/dev\/(sd|nvme|hd)
+:\(\)[[:space:]]*\{[[:space:]]*:[[:space:]]*\|[[:space:]]*:[[:space:]]*&[[:space:]]*\}[[:space:]]*;
+
+# Privilege and account changes
+chmod[[:space:]]+(-[a-zA-Z]+[[:space:]]+)*[0-7]{3,4}[[:space:]]+\/([[:space:]]|$)
+chown[[:space:]]+[^|]*(:[^|]*)?[[:space:]]+\/([[:space:]]|$)
+(useradd|userdel|usermod|groupadd|passwd)[[:space:]]
+
+# Publishing things that are not ours to publish
+(git|gh)[[:space:]][^|]*push[[:space:]][^|]*--force(-with-lease)?[[:space:]].*[[:space:]]main([[:space:]]|$)
+
+# Credential exfiltration in one step
+(curl|wget)[[:space:]][^|]*\|[[:space:]]*(ba)?sh
+(curl|wget)[[:space:]][^|]*(-d|--data|-F|--form)[[:space:]][^|]*@(\.|~|/)

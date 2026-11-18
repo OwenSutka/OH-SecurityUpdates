@@ -1,0 +1,39 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "/(terminal|bash|shell|exec|run_command)/",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"${PLUGIN_ROOT}/dev.openhands/hooks/pre_tool.sh\"",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "/(file|editor|write|patch|create|str_replace|browser)/",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"${PLUGIN_ROOT}/dev.openhands/hooks/pre_tool.sh\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"${PLUGIN_ROOT}/dev.openhands/hooks/post_tool.sh\"",
+            "timeout": 10,
+            "async": true
+          }
+        ]
+      }
+    ]
+  }
+}

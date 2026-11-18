@@ -1,0 +1,9 @@
+# log_commands.txt
+#
+# exit 0, event only. Routine commands recorded without interrupting.
+
+^(cat|less|more|head|tail|grep|rg|find|ls|wc|file|stat|du|df|tree)[[:space:]]
+^(ps|top|htop|free|uname|whoami|id|date|uptime)[[:space:]]
+^(echo|printf)[[:space:]]
+^(mkdir|touch|cp|mv|ln)[[:space:]]
+^(jq|sed|awk|sort|uniq|cut|tr|xargs)[[:space:]]

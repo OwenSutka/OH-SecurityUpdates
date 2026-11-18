@@ -1,0 +1,17 @@
+# allow_silent.txt
+#
+# Operations that are never warned and never logged.
+#
+# This file exists almost entirely for one reason: version control. Committing is
+# how work gets saved, and a guardrail that makes `git status` noisy trains the
+# user to ignore warnings. Rule R1 in the plan.
+#
+# Matched as ERE against the extracted command string.
+
+^[[:space:]]*git[[:space:]]+(status|diff|log|show|add|commit|push|pull|fetch|branch|checkout|switch|restore|stash|tag|remote|rev-parse|ls-files|config|rebase|merge|cherry-pick|reset|blame|shortlog|describe|reflog|init|clone)\b
+^[[:space:]]*gh[[:space:]]+(pr|issue|repo|api|auth|run|workflow|release)[[:space:]]
+^[[:space:]]*ls([[:space:]]|$)
+^[[:space:]]*pwd([[:space:]]|$)
+^[[:space:]]*cd[[:space:]]
+^[[:space:]]*(uv|uvx)[[:space:]]+(run|sync|lock|pip|venv|add|remove|tree)[[:space:]]
+^[[:space:]]*(python3?|pytest|ruff|mypy)([[:space:]]|$)

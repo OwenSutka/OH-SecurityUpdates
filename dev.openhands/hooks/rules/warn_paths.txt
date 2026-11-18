@@ -1,0 +1,10 @@
+# warn_paths.txt
+#
+# exit 0 plus additionalContext for sensitive-but-legitimate paths.
+
+~?\/?\.config\/
+~?\/?\.local\/share\/
+\/proc\/(self|\d+)\/environ
+\.pem$|\.key$|\.p12$|\.pfx$
+credentials
+secrets
